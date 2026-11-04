@@ -1,0 +1,20 @@
+{
+  "name": "mundos-ia",
+  "version": "1.0.0",
+  "description": "Genera mundos imaginarios y bocetos visuales desde la terminal.",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "keywords": [
+    "nodejs",
+    "ia",
+    "mundos-imaginarios",
+    "sena"
+  ],
+  "author": "Estudiante SENA",
+  "license": "MIT",
+  "dependencies": {
+    "object-hash": "^3.0.0"
+  }
+}
