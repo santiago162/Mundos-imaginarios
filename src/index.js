@@ -45,12 +45,18 @@ async function main() {
 
     // Paso 3: enviar el texto guardado y reutilizar la imagen si ya existe.
     fs.mkdirSync(imagenesDir, { recursive: true });
-    const rutaImagen = path.join(imagenesDir, `mundo_${mundoGuardado.id}.jpg`);
+    const rutasImagen = ['gif', 'jpg', 'png', 'svg', 'webp'].map((extension) =>
+      path.join(imagenesDir, `mundo_${mundoGuardado.id}.${extension}`),
+    );
+    const rutaImagenExistente = rutasImagen.find((ruta) => fs.existsSync(ruta));
 
-    if (fs.existsSync(rutaImagen)) {
+    if (rutaImagenExistente) {
       console.log('Paso 3: la imagen ya existía, no se llamó al modelo de imágenes.');
     } else {
-      const bytesImagen = await generarImagen(fs.readFileSync(rutaDescripcion, 'utf8'));
+      const { bytes: bytesImagen, extension } = await generarImagen(
+        fs.readFileSync(rutaDescripcion, 'utf8'),
+      );
+      const rutaImagen = path.join(imagenesDir, `mundo_${mundoGuardado.id}.${extension}`);
       fs.writeFileSync(rutaImagen, bytesImagen);
       console.log(`Paso 3: imagen guardada en ${path.relative(raiz, rutaImagen)}`);
     }

@@ -1,11 +1,11 @@
 # mundos-ia
 
-Programa de consola en Node.js que guarda los datos de un mundo imaginario, solicita una descripción visual en inglés a una API de texto y genera una imagen con NVIDIA FLUX.1-schnell. Los resultados se guardan en `data/`, `descripciones/` e `imagenes/`. Si la descripción o la imagen ya existen, se reutilizan para no volver a consumir cuota.
+Programa de consola en Node.js que guarda los datos de un mundo imaginario, solicita una descripción visual en inglés a una API de texto y genera una imagen con Pollinations y FLUX.1-schnell. Los resultados se guardan en `data/`, `descripciones/` e `imagenes/`. Si la descripción o la imagen ya existen, se reutilizan para no volver a consumir cuota.
 
 ## Requisitos
 
 - Node.js 20.12 o superior y npm.
-- Una clave de Groq para texto y una clave de NVIDIA para imágenes.
+- Una clave de Groq para texto y una clave de Pollinations para imágenes.
 
 ## Instalación y configuración
 
@@ -14,7 +14,7 @@ npm install
 Copy-Item .env.example .env
 ```
 
-Edita `.env` y reemplaza los valores de ejemplo por tus claves. No compartas ese archivo ni lo agregues a Git; está excluido en `.gitignore`.
+Edita `.env` y reemplaza los valores de ejemplo por tus claves. Obtén una clave de Pollinations en [enter.pollinations.ai/keys](https://enter.pollinations.ai/keys). Las solicitudes de generación pueden consumir el saldo Pollen de la clave. No compartas ese archivo ni lo agregues a Git; está excluido en `.gitignore`.
 
 ## Ejemplo
 
@@ -45,7 +45,7 @@ mundos-ia/
 ## Servicios seleccionados
 
 - Texto: [Groq API](https://console.groq.com/docs/api-reference#chat-create), modelo `openai/gpt-oss-20b`.
-- Imagen: [NVIDIA FLUX.1-schnell](https://build.nvidia.com/black-forest-labs/flux-1-schnell).
+- Imagen: [Pollinations API](https://gen.pollinations.ai/), modelo `black-forest-labs/flux.1-schnell`.
 
 Los modelos, límites gratuitos y endpoints pueden cambiar; revisa la documentación y tus cuotas antes de usarlos.
 
@@ -70,7 +70,7 @@ El JSON es texto estructurado que contiene datos y metadatos; los bytes son el c
 Se interpretaría el contenido binario como texto y se alterarían los bytes, por lo que probablemente el archivo no podría abrirse. Por eso se escribe el `Buffer` directamente, sin indicar codificación.
 
 **¿Qué pasos consumen cuota y cómo se evita repetirlos?**  
-Las llamadas a los modelos de texto y de imágenes pueden consumir cuota. El programa comprueba si el `.txt` y el `.jpg` ya existen y reutiliza sus contenidos en vez de repetir esas llamadas.
+Las llamadas a los modelos de texto y de imágenes pueden consumir cuota. El programa comprueba si la descripción y la imagen ya existen y reutiliza sus contenidos en vez de repetir esas llamadas. La extensión de imagen (`.png`, `.jpg`, `.webp`, `.gif` o `.svg`) depende del formato devuelto por el servicio.
 
 **Si usaste IA, ¿qué fue lo más difícil y qué corregiste?**  
 Completa esta respuesta con tu experiencia personal tras revisar y probar el código; no debe atribuirse al estudiante una revisión que todavía no haya hecho.

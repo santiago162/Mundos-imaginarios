@@ -4,7 +4,8 @@
   "description": "Genera mundos imaginarios y bocetos visuales desde la terminal.",
   "main": "src/index.js",
   "scripts": {
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "test": "node --test"
   },
   "keywords": [
     "nodejs",
