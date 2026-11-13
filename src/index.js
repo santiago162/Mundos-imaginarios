@@ -32,13 +32,11 @@ async function main() {
     const mundoGuardado = leerMundo(rutaJson);
     fs.mkdirSync(descripcionesDir, { recursive: true });
     const rutaDescripcion = path.join(descripcionesDir, `mundo_${mundoGuardado.id}.txt`);
-    let descripcion;
 
     if (fs.existsSync(rutaDescripcion)) {
-      descripcion = fs.readFileSync(rutaDescripcion, 'utf8');
       console.log('Paso 2: la descripción ya existía, no se llamó al modelo de texto.');
     } else {
-      descripcion = await describirMundo(mundoGuardado);
+      const descripcion = await describirMundo(mundoGuardado);
       fs.writeFileSync(rutaDescripcion, descripcion, 'utf8');
       console.log(`Paso 2: descripción guardada en ${path.relative(raiz, rutaDescripcion)}`);
     }

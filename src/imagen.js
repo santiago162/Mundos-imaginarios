@@ -1,3 +1,11 @@
+const EXTENSIONES_POR_TIPO_IMAGEN = {
+  'image/gif': 'gif',
+  'image/jpeg': 'jpg',
+  'image/png': 'png',
+  'image/svg+xml': 'svg',
+  'image/webp': 'webp',
+};
+
 function explicarErrorApi(respuesta) {
   if (respuesta.status === 401 || respuesta.status === 403) {
     throw new Error('La clave de Pollinations no es válida o no tiene permiso para generar imágenes.');
@@ -63,16 +71,12 @@ async function generarImagen(descripcion) {
 
   const contentType = respuesta.headers.get('content-type');
   const tipoImagen = contentType && contentType.split(';')[0].trim().toLowerCase();
-  const extension = {
-    'image/gif': 'gif',
-    'image/jpeg': 'jpg',
-    'image/png': 'png',
-    'image/svg+xml': 'svg',
-    'image/webp': 'webp',
-  }[tipoImagen];
+  const extension = EXTENSIONES_POR_TIPO_IMAGEN[tipoImagen];
 
   if (!extension) {
-    throw new Error(`Pollinations devolvió una respuesta que no es una imagen (${contentType || 'tipo desconocido'}).`);
+    throw new Error(
+      `Pollinations devolvió una respuesta que no es una imagen (${contentType || 'tipo desconocido'}).`,
+    );
   }
 
   const bytes = Buffer.from(await respuesta.arrayBuffer());
